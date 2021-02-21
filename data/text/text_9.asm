@@ -440,3 +440,8 @@ _UsedCutText::
 	text " hacked"
 	line "away with CUT!"
 	prompt
+
+_PotentialCutText::
+	text "Someone can"
+	line "probably cut!"
+	prompt

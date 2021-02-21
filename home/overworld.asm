@@ -99,6 +99,9 @@ OverworldLoopLessDelay::
 	ldh a, [hSpriteIndexOrTextID]
 	and a
 	jp z, OverworldLoop
+	ld a, [wTileInFrontOfPlayer]
+	cp $3d ; cut tree
+	call z, DisplayCutText
 .displayDialogue
 	predef GetTileAndCoordsInFrontOfPlayer
 	call UpdateSprites
@@ -294,6 +297,15 @@ OverworldLoopLessDelay::
 	ld c, 10
 	call DelayFrames
 	jp EnterMap
+
+DisplayCutText:
+	ld hl, PotentialCutText
+	call PrintText
+	ret
+
+PotentialCutText:
+	text_far _PotentialCutText
+	text_end
 
 StepCountCheck::
 	ld a, [wd730]
@@ -1729,7 +1741,7 @@ RunMapScript::
 	pop bc
 	pop de
 	pop hl
-	call RunNPCMovementScript
+	farcall RunNPCMovementScript
 	ld a, [wCurMap] ; current map number
 	call SwitchToMapRomBank ; change to the ROM bank the map's data is in
 	ld hl, wMapScriptPtr
