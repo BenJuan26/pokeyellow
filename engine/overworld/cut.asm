@@ -252,7 +252,29 @@ ReplaceTreeTileBlock:
 INCLUDE "data/tilesets/cut_tree_blocks.asm"
 
 DisplayCutText::
-	; tx_pre_id PotentialCutText
+	ld a, [wPartyCount]
+	ld d, a
+.monLoop
+	ld a, d
+	ld [wWhichPokemon], a
+	dec a ; no offset for mon 1, 1 offset for mon 2, etc.
+	ld hl, wPartyMon1Moves
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld a, CUT
+	ld b, a
+	ld c, NUM_MOVES
+.moveLoop
+	ld a, [hli]
+	cp b
+	jr z, .knowsCut
+	dec c
+	jr nz, .moveLoop
+	dec d
+	jr nz, .monLoop
+	; do nothing for now
+	ret
+.knowsCut
 	ld a, TEXT_CUT_SHORTCUT
 	ld [hSpriteIndexOrTextID], a
 	call PrintPredefTextID
