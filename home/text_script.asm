@@ -31,6 +31,7 @@ DisplayTextID::
 	dict TEXT_MON_FAINTED,      DisplayPokemonFaintedText
 	dict TEXT_BLACKED_OUT,      DisplayPlayerBlackedOutText
 	dict TEXT_REPEL_WORE_OFF,   DisplayRepelWoreOffText
+	dict TEXT_CUT_SHORTCUT,     DisplayCutMenu
 
 	ld a, [wNumSprites]
 	ld e, a
@@ -222,3 +223,13 @@ RepelWoreOffText::
 DisplayPikachuEmotion::
 	callfar TalkToPikachu
 	jp CloseTextDisplay
+
+DisplayCutMenu:
+	ld hl, PotentialCutText
+	call PrintText
+	hlcoord 14, 7
+	lb bc, 8, 15
+	ld a, TWO_OPTION_MENU
+	ld [wTextBoxID], a
+	call DisplayTextBoxID ; yes/no menu
+	jp AfterDisplayingTextID

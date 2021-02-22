@@ -444,4 +444,4 @@ _UsedCutText::
 _PotentialCutText::
 	text "Someone can"
 	line "probably cut!"
-	prompt
+	done

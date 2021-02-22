@@ -98,10 +98,7 @@ OverworldLoopLessDelay::
 	call Func_0ffe
 	ldh a, [hSpriteIndexOrTextID]
 	and a
-	jp z, OverworldLoop
-	ld a, [wTileInFrontOfPlayer]
-	cp $3d ; cut tree
-	call z, DisplayCutText
+	jp z, .checkForCut
 .displayDialogue
 	predef GetTileAndCoordsInFrontOfPlayer
 	call UpdateSprites
@@ -123,6 +120,12 @@ OverworldLoopLessDelay::
 	ld a, [wCurOpponent]
 	and a
 	jp nz, .newBattle
+	jp OverworldLoop
+.checkForCut
+	ld a, [wTileInFrontOfPlayer]
+	cp $3d ; cut tree
+	jp nz, OverworldLoop
+	farcall DisplayCutText
 	jp OverworldLoop
 
 .noDirectionButtonsPressed
@@ -297,15 +300,6 @@ OverworldLoopLessDelay::
 	ld c, 10
 	call DelayFrames
 	jp EnterMap
-
-DisplayCutText:
-	ld hl, PotentialCutText
-	call PrintText
-	ret
-
-PotentialCutText:
-	text_far _PotentialCutText
-	text_end
 
 StepCountCheck::
 	ld a, [wd730]

@@ -250,3 +250,14 @@ ReplaceTreeTileBlock:
 	ret
 
 INCLUDE "data/tilesets/cut_tree_blocks.asm"
+
+DisplayCutText::
+	; tx_pre_id PotentialCutText
+	ld a, TEXT_CUT_SHORTCUT
+	ld [hSpriteIndexOrTextID], a
+	call PrintPredefTextID
+	ret
+
+PotentialCutText::
+	text_far _PotentialCutText
+	text_end
