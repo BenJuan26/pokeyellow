@@ -253,11 +253,11 @@ INCLUDE "data/tilesets/cut_tree_blocks.asm"
 
 DisplayCutText::
 	ld a, [wPartyCount]
+	dec a
 	ld d, a
 .monLoop
 	ld a, d
 	ld [wWhichPokemon], a
-	dec a ; no offset for mon 1, 1 offset for mon 2, etc.
 	ld hl, wPartyMon1Moves
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
@@ -271,15 +271,23 @@ DisplayCutText::
 	dec c
 	jr nz, .moveLoop
 	dec d
+	cp $ff ; rollover
 	jr nz, .monLoop
 	; do nothing for now
 	ret
 .knowsCut
-	ld a, TEXT_CUT_SHORTCUT
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMonNicks
+	call GetPartyMonName
+	ld a, TEXT_CUT_PROMPT
 	ld [hSpriteIndexOrTextID], a
 	call PrintPredefTextID
 	ret
 
-PotentialCutText::
-	text_far _PotentialCutText
+CutTreeText::
+	text_far _CutTreeText
+	text_end
+
+CutPromptText::
+	text_far _CutPromptText
 	text_end

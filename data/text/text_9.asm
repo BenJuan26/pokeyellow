@@ -441,7 +441,15 @@ _UsedCutText::
 	line "away with CUT!"
 	prompt
 
-_PotentialCutText::
-	text "Someone can"
-	line "probably cut!"
+_CutTreeText::
+	text "This tree can"
+	line "probably be cut!"
 	done
+
+_CutPromptText::
+	text_ram wcd6d
+	text " is able"
+	line "to use CUT."
+	para "Would you like"
+	line "to use CUT?"
+	done ; prompt?

@@ -31,7 +31,8 @@ DisplayTextID::
 	dict TEXT_MON_FAINTED,      DisplayPokemonFaintedText
 	dict TEXT_BLACKED_OUT,      DisplayPlayerBlackedOutText
 	dict TEXT_REPEL_WORE_OFF,   DisplayRepelWoreOffText
-	dict TEXT_CUT_SHORTCUT,     DisplayCutMenu
+	dict TEXT_CUT_PROMPT,       DisplayCutMenu
+	dict TEXT_CUT_TREE,         DisplayCutTreeText
 
 	ld a, [wNumSprites]
 	ld e, a
@@ -225,11 +226,16 @@ DisplayPikachuEmotion::
 	jp CloseTextDisplay
 
 DisplayCutMenu:
-	ld hl, PotentialCutText
+	ld hl, CutPromptText
 	call PrintText
 	hlcoord 14, 7
 	lb bc, 8, 15
 	ld a, TWO_OPTION_MENU
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; yes/no menu
+	jp AfterDisplayingTextID
+
+DisplayCutTreeText:
+	ld hl, CutTreeText
+	call PrintText
 	jp AfterDisplayingTextID

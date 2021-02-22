@@ -18,6 +18,7 @@ LEADING_ZEROES EQU (1 << BIT_LEADING_ZEROES)
 	const TEXT_REPEL_WORE_OFF   ; $d2
 	const TEXT_SAFARI_GAME_OVER ; $d3
 	const TEXT_PIKACHU_ANIM     ; $d4
-	const TEXT_CUT_SHORTCUT     ; $d5
+	const TEXT_CUT_PROMPT     ; $d5
+	const TEXT_CUT_TREE         ; $d4
 
 TEXT_START_MENU EQU $00
