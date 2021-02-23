@@ -271,9 +271,12 @@ DisplayCutText::
 	dec c
 	jr nz, .moveLoop
 	dec d
+	ld a, d
 	cp $ff ; rollover
 	jr nz, .monLoop
-	; do nothing for now
+	ld a, TEXT_CUT_TREE
+	ld [hSpriteIndexOrTextID], a
+	call PrintPredefTextID
 	ret
 .knowsCut
 	ld a, [wWhichPokemon]
@@ -282,6 +285,13 @@ DisplayCutText::
 	ld a, TEXT_CUT_PROMPT
 	ld [hSpriteIndexOrTextID], a
 	call PrintPredefTextID
+	ld a, [wMenuExitMethod]
+	cp CHOSE_SECOND_ITEM ; did the player choose NO?
+	jr nz, .choseYes
+	ld a, $aa
+	ret
+.choseYes
+	ld a, $ff
 	ret
 
 CutTreeText::
