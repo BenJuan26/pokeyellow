@@ -285,13 +285,6 @@ DisplayCutText::
 	ld a, TEXT_CUT_PROMPT
 	ld [hSpriteIndexOrTextID], a
 	call PrintPredefTextID
-	ld a, [wMenuExitMethod]
-	cp CHOSE_SECOND_ITEM ; did the player choose NO?
-	jr nz, .choseYes
-	ld a, $aa
-	ret
-.choseYes
-	ld a, $ff
 	ret
 
 CutTreeText::

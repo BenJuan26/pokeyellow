@@ -233,6 +233,12 @@ DisplayCutMenu:
 	ld a, TWO_OPTION_MENU
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; yes/no menu
+	ld a, [wMenuExitMethod]
+	cp CHOSE_SECOND_ITEM ; did the player choose NO?
+	jr nz, .choseYes
+	jp AfterDisplayingTextID
+.choseYes
+	predef UsedCut
 	jp AfterDisplayingTextID
 
 DisplayCutTreeText:
