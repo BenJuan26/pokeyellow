@@ -236,12 +236,12 @@ DisplayCutMenu:
 	ld a, [wMenuExitMethod]
 	cp CHOSE_SECOND_ITEM ; did the player choose NO?
 	jr nz, .choseYes
-	jp AfterDisplayingTextID
+	jp CloseTextDisplay
 .choseYes
 	predef UsedCut
-	jp AfterDisplayingTextID
+	jp CloseTextDisplay
 
 DisplayCutTreeText:
 	ld hl, CutTreeText
 	call PrintText
-	jp AfterDisplayingTextID
+	jp CloseTextDisplay
